@@ -1,0 +1,25 @@
+name: build
+
+on:
+  push:
+    branches:
+    - master
+  schedule:
+    - cron: '20 9 * * 1'
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_REPO: yskszk63/my-archlinux-container-image
+    steps:
+    - uses: actions/checkout@v2
+    - name: Login Github Container Registry
+      run: echo $TOKEN | docker login ghcr.io -u USERNAME --password-stdin
+      env:
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build Docker image
+      run: |
+        docker build -t ghcr.io/$DOCKER_REPO:latest .
+        docker push ghcr.io/$DOCKER_REPO:latest
+
