@@ -9,5 +9,4 @@ RUN pacman -Syyu --noconfirm && \
     pacman -Scc --noconfirm && \
     zsh -c '. ~/.zshrc'
 
-ENTRYPOINT /usr/bin/zsh
-CMD --login
+CMD ["/usr/bin/zsh", "--login"]
